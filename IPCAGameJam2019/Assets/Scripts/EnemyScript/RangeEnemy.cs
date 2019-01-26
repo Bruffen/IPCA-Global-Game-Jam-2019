@@ -8,6 +8,9 @@ public class RangeEnemy : Enemy
     public GameObject Bullet;
     private bool atacknow;
     bool goingRight;
+    public AudioClip aC_atk;
+
+
     protected override void Start()
     {
         base.Start();
@@ -43,6 +46,7 @@ public class RangeEnemy : Enemy
     }
     private void Shot()
     {
+        aS.PlayOneShot(aC_atk);
         Vector3 spawnPos = this.transform.position;
         GameObject b = Instantiate(Bullet, spawnPos, Quaternion.identity);
         Vector2 velocity = new Vector2(tPlayer.transform.position.x - enRigidBody.position.x, tPlayer.transform.position.y - enRigidBody.position.y);

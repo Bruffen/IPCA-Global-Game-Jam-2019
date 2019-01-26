@@ -18,6 +18,11 @@ public class Enemy : MonoBehaviour
     protected float cooldown;
     protected Animator animator;
 
+    public AudioSource aS;
+    public AudioClip aC_Dano1, aC_Dano2, aC_Dano3;//, aC_walk;
+
+    protected float oldPos;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -27,7 +32,7 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         health = 10;
         cooldown = 0;
-
+        oldPos = transform.position.x;
     }
 
     protected virtual void Update()
@@ -46,6 +51,8 @@ public class Enemy : MonoBehaviour
         enRigidBody.position += velocity + knockVelocity;
         knockVelocity *= 0.9f;
         velocity *= 0.9f;
+
+       // if (IsMoving()) aS.(aC_walk); 
     }
 
     protected virtual Vector2 Knockback()
@@ -73,6 +80,21 @@ public class Enemy : MonoBehaviour
 
     private void takeDamage(int damage)
     {
+        switch (Random.Range(1, 4))
+        {
+            case 1:
+                aS.PlayOneShot(aC_Dano1);
+                break;
+            case 2:
+                aS.PlayOneShot(aC_Dano2);
+                break;
+            case 3:
+                aS.PlayOneShot(aC_Dano3);
+                break;
+            
+        }
+        
+        
         health -= damage;
         if (health <= 0)
         {
@@ -83,6 +105,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D col)
     {
+
         if (col.gameObject.CompareTag("PlayerAttack"))
         {
             knockVelocity += Knockback();
@@ -119,4 +142,21 @@ public class Enemy : MonoBehaviour
 
         }
     }
+
+    protected bool IsMoving()
+    {
+        if (oldPos != transform.position.x)
+        {
+            oldPos = transform.position.x;
+            return true;
+        }
+        else
+        {
+            oldPos = transform.position.x;
+            return false;
+        }
+        
+    }
+
 }
+
