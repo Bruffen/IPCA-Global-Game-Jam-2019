@@ -26,4 +26,6 @@ public class MeleeEnemy : Enemy
         cooldown = 2;
     }
 
+    
+
 }

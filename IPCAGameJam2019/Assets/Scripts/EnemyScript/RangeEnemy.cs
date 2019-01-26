@@ -7,23 +7,26 @@ public class RangeEnemy : Enemy
     private Vector2 originPos;
     public GameObject Bullet;
     private bool atacknow;
+    bool goingRight;
     protected override void Start()
     {
         base.Start();
         farsight = 8;
         knockValue = 0.25f;
         health = 20;
-        atacknow = true;
+        originPos = this.transform.position;
+        goingRight = true;
+        StartCoroutine(Changedi());
     }
 
     protected override void Update() {
         base.Update();
-        if(atacknow)
-        transform.position = Vector2.Lerp(originPos + Vector2.left, originPos + Vector2.right, Mathf.Abs(Mathf.Cos(Time.time)));
+     
     }
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        velocity += (goingRight ? Vector2.right : Vector2.left) * 0.01f ;
 
         if (SensePlayer())
         {
@@ -45,5 +48,20 @@ public class RangeEnemy : Enemy
         Vector2 velocity = new Vector2(tPlayer.transform.position.x - enRigidBody.position.x, tPlayer.transform.position.y - enRigidBody.position.y);
         velocity.Normalize();
         b.GetComponent<BulletController>().Assign(velocity);
+    }
+    protected override Vector2 Knockback()
+    {
+        originPos = this.transform.position;
+        return base.Knockback();
+       
+    }
+
+    private IEnumerator Changedi()
+    {
+        while (true) { 
+        yield return new WaitForSeconds(3.0f);
+        goingRight = !goingRight;
+        }
+
     }
 }
