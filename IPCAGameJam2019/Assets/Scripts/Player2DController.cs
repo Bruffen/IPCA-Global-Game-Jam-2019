@@ -15,6 +15,9 @@ public class Player2DController : MonoBehaviour
 
     private float attackCooldown;
     private float attackTimer;
+    public GameObject FrontAttack;
+    public GameObject UpAttack;
+    public GameObject DownAttack;
 
     void Start()
     {
