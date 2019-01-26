@@ -36,4 +36,9 @@ public class BulletController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.layer == 9)
+            Destroy(this.gameObject);
+    }
 }

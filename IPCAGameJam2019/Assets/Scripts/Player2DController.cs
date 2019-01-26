@@ -32,8 +32,8 @@ public class Player2DController : MonoBehaviour
 
         frontAttackInitalPos = FrontAttack.transform.localPosition;
 
-        maxSpeed = 0.2f;
-        jumpSpeed = 1.0f;
+        maxSpeed = 0.15f;
+        jumpSpeed = 1.2f;
         attackCooldown = 0.4f;
         secondJump = true;
     }
@@ -75,7 +75,7 @@ public class Player2DController : MonoBehaviour
             else grounded = false;
         }
         else if (velocity.y > 0)
-            velocity.y -= Time.deltaTime * (Input.GetAxisRaw("Vertical") < 0.0f ? 2.5f : 1.0f);
+            velocity.y -= Time.deltaTime * (Input.GetAxisRaw("Vertical") < 0.0f ? 3.0f : 1.0f);
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -86,6 +86,15 @@ public class Player2DController : MonoBehaviour
             secondJump = true;
             velocity.y = 0;
         }
+        /*else if (col.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage(1); //TODO calculate damage
+        }*/
+    }
+
+    void TakeDamage(int damage)
+    {
+        health -= damage;
     }
 
     void HandleAttacks()
@@ -95,13 +104,11 @@ public class Player2DController : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                Debug.Log("Attack1");
                 attackTimer = 0.0f;
                 MeleeAttack();
             }
             else if (Input.GetButtonDown("Fire2"))
             {
-                Debug.Log("Attack2");
                 attackTimer = 0.0f;
                 RangedAttack();
             }
@@ -139,6 +146,12 @@ public class Player2DController : MonoBehaviour
             spawnPos -= transform.up;
         else
             spawnPos += sr.flipX ? -transform.right : transform.right;
+
+        if (direction == Vector2.zero)
+        {
+            if (sr.flipX) direction = new Vector2(-1.0f, 0.0f);
+            else direction = new Vector2(1.0f, 0.0f);
+        }
 
         GameObject b = Instantiate(Bullet, spawnPos, Quaternion.identity);
         b.GetComponent<BulletController>().Assign(direction);
