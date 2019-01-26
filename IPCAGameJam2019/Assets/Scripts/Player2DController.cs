@@ -10,6 +10,7 @@ public class Player2DController : MonoBehaviour
     private int health;
 
     private Vector2 velocity;
+    private Vector2 knockbackVelocity;
     private float maxSpeed;
     private float jumpSpeed;
     private bool grounded;
@@ -24,7 +25,11 @@ public class Player2DController : MonoBehaviour
     private Animator frontAttackAnim;
 
     public GameObject UpAttack;
+    private Animator upAttackAnim;
+
     public GameObject DownAttack;
+    private Animator downAttackAnim;
+
     public GameObject Bullet;
 
     void Start()
@@ -37,6 +42,10 @@ public class Player2DController : MonoBehaviour
         frontAttackInitalPos = FrontAttack.transform.localPosition;
         frontAttackSr = FrontAttack.GetComponent<SpriteRenderer>();
         frontAttackAnim = FrontAttack.GetComponent<Animator>();
+
+        upAttackAnim = UpAttack.GetComponent<Animator>();
+
+        downAttackAnim = DownAttack.GetComponent<Animator>();
 
         maxSpeed = 0.15f;
         jumpSpeed = 1.2f;
@@ -52,7 +61,8 @@ public class Player2DController : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.position += velocity * maxSpeed;
+        rb.position += velocity * maxSpeed + knockbackVelocity;
+        knockbackVelocity *= 0.9f;
     }
 
     void Movement()
@@ -82,20 +92,6 @@ public class Player2DController : MonoBehaviour
         }
         else if (velocity.y > 0)
             velocity.y -= Time.deltaTime * (Input.GetAxisRaw("Vertical") < 0.0f ? 3.0f : 1.0f);
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.layer == 9)
-        {
-            grounded = true;
-            secondJump = true;
-            velocity.y = 0;
-        }
-        /*else if (col.gameObject.CompareTag("Enemy"))
-        {
-            TakeDamage(1); //TODO calculate damage
-        }*/
     }
 
     void TakeDamage(int damage)
@@ -130,6 +126,20 @@ public class Player2DController : MonoBehaviour
             if (frontAttackAnim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
             {
                 FrontAttack.SetActive(false);
+            }
+        }
+        if (UpAttack.activeSelf)
+        {
+            if (upAttackAnim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+            {
+                UpAttack.SetActive(false);
+            }
+        }
+        if (DownAttack.activeSelf)
+        {
+            if (downAttackAnim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+            {
+                DownAttack.SetActive(false);
             }
         }
     }
@@ -180,5 +190,32 @@ public class Player2DController : MonoBehaviour
 
         GameObject b = Instantiate(Bullet, spawnPos, Quaternion.identity);
         b.GetComponent<BulletController>().Assign(direction);
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.layer == 9)
+        {
+            grounded = true;
+            secondJump = true;
+            velocity.y = 0;
+        }
+        /*else if (col.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage(1); //TODO calculate damage
+        }*/
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Enemy") && DownAttack.activeSelf)
+        {
+            knockbackVelocity += Knockback(col.gameObject.transform);
+        }
+    }
+
+    private Vector2 Knockback(Transform target)
+    {
+        return (this.transform.position - target.position) * 0.35f;
     }
 }

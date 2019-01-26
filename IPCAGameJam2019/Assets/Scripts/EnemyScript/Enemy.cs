@@ -10,15 +10,15 @@ public class Enemy : MonoBehaviour
     protected Vector2 velocity;
 
     protected float knockValue;
-    protected Vector2 knockValeuVelocity;
+    protected Vector2 knockVelocity;
 
     protected float farsight;
     protected Rigidbody2D enRigidBody;
-    
-   
+
+
 
     // Start is called before the first frame update
-   protected virtual void Start()
+    protected virtual void Start()
     {
         tPlayer = GameObject.FindGameObjectWithTag("Player").transform;
         velocity = Vector2.zero;
@@ -27,14 +27,14 @@ public class Enemy : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        enRigidBody.position += velocity + knockValeuVelocity;
-        knockValeuVelocity *= 0.9f;
+        enRigidBody.position += velocity + knockVelocity;
+        knockVelocity *= 0.9f;
     }
 
     protected virtual Vector2 Knockback()
     {
         Vector2 finalResult;
-        finalResult = (this.transform.position - tPlayer.position ) * knockValue;
+        finalResult = (this.transform.position - tPlayer.position) * knockValue;
         return finalResult;
     }
 
@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
     /***/
     protected void AiBehaviour()
     {
-        
+
     }
 
     private void takeDamage()

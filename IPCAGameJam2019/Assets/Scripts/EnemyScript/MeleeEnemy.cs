@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MeleeEnemy : Enemy
 {
-    
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         farsight = 2;
-        knockValue = 0.5f;
+        knockValue = 0.25f;
     }
 
     protected override void FixedUpdate()
@@ -18,15 +18,11 @@ public class MeleeEnemy : Enemy
         base.FixedUpdate();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (collision.gameObject.transform == tPlayer)
+        if (col.gameObject.CompareTag("PlayerAttack"))
         {
-            knockValeuVelocity += Knockback();
-
+            knockVelocity += Knockback();
         }
-
     }
-
-
 }
