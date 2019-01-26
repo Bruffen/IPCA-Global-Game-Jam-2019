@@ -28,6 +28,7 @@ public class BulletController : MonoBehaviour
     void FixedUpdate()
     {
         rb.position += velocity * speed;
+        rb.transform.Rotate(Vector3.back * Time.deltaTime*600);
     }
 
     IEnumerator Life()
@@ -36,9 +37,10 @@ public class BulletController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.layer == 9)
+        if (col.gameObject.layer == 9 || col.gameObject.tag=="Enemy")
             Destroy(this.gameObject);
+
     }
 }

@@ -200,6 +200,11 @@ public class Player2DController : MonoBehaviour
             secondJump = true;
             velocity.y = 0;
         }
+        if (col.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("does it knokkt?");
+            knockbackVelocity += Knockback(col.gameObject.transform);
+        }
         /*else if (col.gameObject.CompareTag("Enemy"))
         {
             TakeDamage(1); //TODO calculate damage
@@ -212,7 +217,10 @@ public class Player2DController : MonoBehaviour
         {
             knockbackVelocity += Knockback(col.gameObject.transform);
         }
+     
     }
+
+
 
     private Vector2 Knockback(Transform target)
     {

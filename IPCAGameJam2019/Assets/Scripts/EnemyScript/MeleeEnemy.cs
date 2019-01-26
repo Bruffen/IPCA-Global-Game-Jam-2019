@@ -9,20 +9,21 @@ public class MeleeEnemy : Enemy
     protected override void Start()
     {
         base.Start();
-        farsight = 2;
+        farsight = 5;
         knockValue = 0.25f;
+        health = 20;
+        
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
     }
-
-    private void OnTriggerEnter2D(Collider2D col)
+    protected override void Scheme()
     {
-        if (col.gameObject.CompareTag("PlayerAttack"))
-        {
-            knockVelocity += Knockback();
-        }
+        base.Scheme();
+        velocity = ((Vector2)tPlayer.position - (Vector2)transform.position) / 10;
+        cooldown = 2;
     }
+
 }
