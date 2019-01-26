@@ -17,8 +17,12 @@ public class Player2DController : MonoBehaviour
 
     private float attackCooldown;
     private float attackTimer;
+
     public GameObject FrontAttack;
     private Vector2 frontAttackInitalPos;
+    private SpriteRenderer frontAttackSr;
+    private Animator frontAttackAnim;
+
     public GameObject UpAttack;
     public GameObject DownAttack;
     public GameObject Bullet;
@@ -31,6 +35,8 @@ public class Player2DController : MonoBehaviour
         health = 10;
 
         frontAttackInitalPos = FrontAttack.transform.localPosition;
+        frontAttackSr = FrontAttack.GetComponent<SpriteRenderer>();
+        frontAttackAnim = FrontAttack.GetComponent<Animator>();
 
         maxSpeed = 0.15f;
         jumpSpeed = 1.2f;
@@ -99,6 +105,8 @@ public class Player2DController : MonoBehaviour
 
     void HandleAttacks()
     {
+        DisableAttacks();
+
         attackTimer += Time.deltaTime;
         if (attackTimer > attackCooldown)
         {
@@ -115,15 +123,32 @@ public class Player2DController : MonoBehaviour
         }
     }
 
+    void DisableAttacks()
+    {
+        if (FrontAttack.activeSelf)
+        {
+            if (frontAttackAnim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+            {
+                FrontAttack.SetActive(false);
+            }
+        }
+    }
+
     void MeleeAttack()
     {
         float direction = Input.GetAxisRaw("Vertical");
         if (direction == 0.0f)
         {
             if (sr.flipX)
+            {
                 FrontAttack.transform.localPosition = new Vector2(-frontAttackInitalPos.x, frontAttackInitalPos.y);
+                frontAttackSr.flipX = true;
+            }
             else
+            {
                 FrontAttack.transform.localPosition = frontAttackInitalPos;
+                frontAttackSr.flipX = false;
+            }
             FrontAttack.SetActive(true);
         }
         else if (direction > 0.0f)
