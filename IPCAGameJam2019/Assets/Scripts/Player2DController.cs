@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player2DController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private SpriteRenderer sr;
+    private Animator anim;
 
     private int health;
 
@@ -14,7 +14,9 @@ public class Player2DController : MonoBehaviour
     private float maxSpeed;
     private float jumpSpeed;
     private bool grounded;
+    private bool moving;
     private bool secondJump;
+    private bool flipped;
 
     private float attackCooldown;
     private float attackTimer;
@@ -35,7 +37,7 @@ public class Player2DController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
 
         health = 10;
 
@@ -57,6 +59,7 @@ public class Player2DController : MonoBehaviour
     {
         Movement();
         HandleAttacks();
+        SetAnimatorParams();
     }
 
     void FixedUpdate()
@@ -71,10 +74,11 @@ public class Player2DController : MonoBehaviour
 
         Jump();
 
-        bool flipSprite = (sr.flipX ? (velocity.x > 0.0f) : (velocity.x < 0.0f));
+        bool flipSprite = (flipped ? (velocity.x > 0.0f) : (velocity.x < 0.0f));
         if (flipSprite)
         {
-            sr.flipX = !sr.flipX;
+            flipped = !flipped;
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
     }
 
@@ -92,6 +96,15 @@ public class Player2DController : MonoBehaviour
         }
         else if (velocity.y > 0)
             velocity.y -= Time.deltaTime * (Input.GetAxisRaw("Vertical") < 0.0f ? 3.0f : 1.0f);
+    }
+
+    void SetAnimatorParams()
+    {
+        anim.SetBool("grounded", grounded);
+        anim.SetBool("moving", velocity != Vector2.zero);
+        anim.SetBool("sideAtk", FrontAttack.activeSelf);
+        anim.SetBool("downAtk", DownAttack.activeSelf);
+        anim.SetBool("upAtk", UpAttack.activeSelf);
     }
 
     void TakeDamage(int damage)
@@ -149,16 +162,6 @@ public class Player2DController : MonoBehaviour
         float direction = Input.GetAxisRaw("Vertical");
         if (direction == 0.0f)
         {
-            if (sr.flipX)
-            {
-                FrontAttack.transform.localPosition = new Vector2(-frontAttackInitalPos.x, frontAttackInitalPos.y);
-                frontAttackSr.flipX = true;
-            }
-            else
-            {
-                FrontAttack.transform.localPosition = frontAttackInitalPos;
-                frontAttackSr.flipX = false;
-            }
             FrontAttack.SetActive(true);
         }
         else if (direction > 0.0f)
@@ -176,15 +179,15 @@ public class Player2DController : MonoBehaviour
         Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         Vector3 spawnPos = this.transform.position;
         if (direction.y == 1.0f && direction.x == 0.0f)
-            spawnPos += transform.up;
+            spawnPos += transform.up * 2.5f;
         else if (direction.y == -1.0f && direction.x == 0.0f)
             spawnPos -= transform.up;
         else
-            spawnPos += sr.flipX ? -transform.right : transform.right;
+            spawnPos += flipped ? -transform.right : transform.right;
 
         if (direction == Vector2.zero)
         {
-            if (sr.flipX) direction = new Vector2(-1.0f, 0.0f);
+            if (flipped) direction = new Vector2(-1.0f, 0.0f);
             else direction = new Vector2(1.0f, 0.0f);
         }
 
