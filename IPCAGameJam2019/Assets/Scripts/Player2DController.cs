@@ -13,18 +13,23 @@ public class Player2DController : MonoBehaviour
     private bool grounded;
     private bool secondJump;
 
+    private float attackCooldown;
+    private float attackTimer;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         maxSpeed = 0.25f;
         jumpSpeed = 1.0f;
+        attackCooldown = 1.0f;
         secondJump = true;
     }
 
     void Update()
     {
         Movement();
+        HandleAttacks();
     }
 
     void FixedUpdate()
@@ -63,11 +68,29 @@ public class Player2DController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.layer == 8)
+        if (col.gameObject.layer == 9)
         {
             grounded = true;
             secondJump = true;
             velocity.y = 0;
+        }
+    }
+
+    void HandleAttacks()
+    {
+        attackTimer += Time.deltaTime;
+        if (attackTimer > attackCooldown)
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Debug.Log("Attack1");
+                attackTimer = 0.0f;
+            }
+            else if (Input.GetButtonDown("Fire2"))
+            {
+                Debug.Log("Attack2");
+                attackTimer = 0.0f;
+            }
         }
     }
 }
