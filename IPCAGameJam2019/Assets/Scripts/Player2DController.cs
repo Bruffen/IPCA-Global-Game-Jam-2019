@@ -7,6 +7,8 @@ public class Player2DController : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
 
+    private int health;
+
     private Vector2 velocity;
     private float maxSpeed;
     private float jumpSpeed;
@@ -16,16 +18,23 @@ public class Player2DController : MonoBehaviour
     private float attackCooldown;
     private float attackTimer;
     public GameObject FrontAttack;
+    private Vector2 frontAttackInitalPos;
     public GameObject UpAttack;
     public GameObject DownAttack;
+    public GameObject Bullet;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-        maxSpeed = 0.25f;
+
+        health = 10;
+
+        frontAttackInitalPos = FrontAttack.transform.localPosition;
+
+        maxSpeed = 0.2f;
         jumpSpeed = 1.0f;
-        attackCooldown = 1.0f;
+        attackCooldown = 0.4f;
         secondJump = true;
     }
 
@@ -88,12 +97,50 @@ public class Player2DController : MonoBehaviour
             {
                 Debug.Log("Attack1");
                 attackTimer = 0.0f;
+                MeleeAttack();
             }
             else if (Input.GetButtonDown("Fire2"))
             {
                 Debug.Log("Attack2");
                 attackTimer = 0.0f;
+                RangedAttack();
             }
         }
+    }
+
+    void MeleeAttack()
+    {
+        float direction = Input.GetAxisRaw("Vertical");
+        if (direction == 0.0f)
+        {
+            if (sr.flipX)
+                FrontAttack.transform.localPosition = new Vector2(-frontAttackInitalPos.x, frontAttackInitalPos.y);
+            else
+                FrontAttack.transform.localPosition = frontAttackInitalPos;
+            FrontAttack.SetActive(true);
+        }
+        else if (direction > 0.0f)
+        {
+            UpAttack.SetActive(true);
+        }
+        else
+        {
+            DownAttack.SetActive(true);
+        }
+    }
+
+    void RangedAttack()
+    {
+        Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        Vector3 spawnPos = this.transform.position;
+        if (direction.y == 1.0f && direction.x == 0.0f)
+            spawnPos += transform.up;
+        else if (direction.y == -1.0f && direction.x == 0.0f)
+            spawnPos -= transform.up;
+        else
+            spawnPos += sr.flipX ? -transform.right : transform.right;
+
+        GameObject b = Instantiate(Bullet, spawnPos, Quaternion.identity);
+        b.GetComponent<BulletController>().Assign(direction);
     }
 }
