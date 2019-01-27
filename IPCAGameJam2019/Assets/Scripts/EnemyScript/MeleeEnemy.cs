@@ -9,9 +9,9 @@ public class MeleeEnemy : Enemy
     protected override void Start()
     {
         base.Start();
-        farsight = 5;
+        farsight = 8;
         knockValue = 0.25f;
-        health = 20;
+        health = 40;
         
     }
 
@@ -22,10 +22,22 @@ public class MeleeEnemy : Enemy
     protected override void Scheme()
     {
         base.Scheme();
-        velocity = ((Vector2)tPlayer.position - (Vector2)transform.position) / 10;
-        cooldown = 2;
+        velocity = ((Vector2)tPlayer.position - (Vector2)transform.position) / 30;
+        cooldown = 1;
     }
 
-    
+    protected override void OnTriggerEnter2D(Collider2D col) {
+        base.OnTriggerEnter2D(col);
+
+        if (col.gameObject.CompareTag("PlayerAttack"))
+        {
+            GameObject g =Instantiate(this.gameObject);
+         
+        }
+
+    }
+
+
+
 
 }
