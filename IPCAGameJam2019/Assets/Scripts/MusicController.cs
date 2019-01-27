@@ -65,6 +65,10 @@ public class MusicController : MonoBehaviour
             {
                 audioSources[currentAudioSource].Play();
             }
+            for (int i = 0; i < audioSources.Length; i++)
+                if (i != currentAudioSource && i != fadingOutSource)
+                    audioSources[i].Stop();
+
             fadingOutSource = oldAudioSource;
             fading = true;
             timer = 0.0f;

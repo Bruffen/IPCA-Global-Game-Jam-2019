@@ -15,6 +15,7 @@ public class Player2DController : MonoBehaviour
     private bool dessature = false;
 
     private int health;
+    private float invulnerabilityTimer;
 
     private Vector2 velocity;
     private Vector2 knockbackVelocity;
@@ -42,7 +43,7 @@ public class Player2DController : MonoBehaviour
     public GameObject Bullet;
 
     public AudioSource As;
-    public AudioClip tacaoDir, tacaoEsq, swordSound,shoeTrowSound, ladingSound;
+    public AudioClip tacaoDir, tacaoEsq, swordSound, shoeTrowSound, ladingSound;
     public AudioClip dano1, dano2, dano3;
 
     void Start()
@@ -76,6 +77,7 @@ public class Player2DController : MonoBehaviour
         HandleAttacks();
         SetAnimatorParams();
         if (dessature) Dessature();
+        invulnerabilityTimer += Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -139,7 +141,7 @@ public class Player2DController : MonoBehaviour
         }
 
 
-                health -= damage;
+        health -= damage;
     }
 
     void HandleAttacks()
@@ -236,15 +238,19 @@ public class Player2DController : MonoBehaviour
             secondJump = true;
             velocity.y = 0;
         }
-        if (col.gameObject.CompareTag("Enemy"))
+        if (invulnerabilityTimer > 0.5f)
         {
-            knockbackVelocity += Knockback(col.gameObject.transform);
-            TakeDamage(5);
-        }
-        if (col.gameObject.CompareTag("BulletEnemy"))
-        {
-            TakeDamage(1);
-            Destroy(col.gameObject);
+            invulnerabilityTimer = 0.0f;
+            if (col.gameObject.CompareTag("Enemy"))
+            {
+                knockbackVelocity += Knockback(col.gameObject.transform);
+                TakeDamage(5);
+            }
+            if (col.gameObject.CompareTag("BulletEnemy"))
+            {
+                TakeDamage(1);
+                Destroy(col.gameObject);
+            }
         }
         //else if (col.gameObject.CompareTag("Enemy"))
         //{
@@ -261,7 +267,7 @@ public class Player2DController : MonoBehaviour
             if (DownAttack.activeSelf)
                 knockbackVelocity += Knockback(col.gameObject.transform);
         }
-     
+
     }
 
     private Vector2 Knockback(Transform target)
@@ -270,7 +276,8 @@ public class Player2DController : MonoBehaviour
     }
 
     /**Sound section*/
-    private void PlayStepDir() {
+    private void PlayStepDir()
+    {
         As.PlayOneShot(tacaoDir);
     }
     private void PlayStepEsq()
