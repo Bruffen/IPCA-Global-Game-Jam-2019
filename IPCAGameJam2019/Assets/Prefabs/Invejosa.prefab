@@ -103,7 +103,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 45ca5591bb84e0f449aa2cd577610f6b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -125,7 +125,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 3.4876888, y: 2.7399387}
@@ -201,8 +201,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 2.424408
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -294,5 +294,9 @@ MonoBehaviour:
   aC_Dano2: {fileID: 8300000, guid: 075600ec163ee00449d0854d2016943c, type: 3}
   aC_Dano3: {fileID: 8300000, guid: 3f2252ce9a91aad4fa1ca56c11adcfa8, type: 3}
   Bullet: {fileID: 5036224809266363810, guid: f622e59ff1a173a4dae4fbbbeb421818, type: 3}
-  aC_atk: {fileID: 0}
+  goingRight: 1
+  aC_atk: {fileID: 8300000, guid: 225e4b3c3c0fe0d47a2144c2843e4a06, type: 3}
+  wing1: {fileID: 8300000, guid: f62234525867dd74d93da28d5e0e3dd3, type: 3}
+  wing2: {fileID: 8300000, guid: ff271b603a03c37438413bd167c6e71c, type: 3}
   spwanPointOnj: {fileID: 834228932531479045}
+  amplitude: 4

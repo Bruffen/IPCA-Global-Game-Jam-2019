@@ -11,7 +11,7 @@ public class MeleeEnemy : Enemy
         base.Start();
         farsight = 8;
         knockValue = 0.25f;
-        health = 40;
+        health = 30;
         
     }
 
@@ -29,9 +29,14 @@ public class MeleeEnemy : Enemy
     protected override void OnTriggerEnter2D(Collider2D col) {
         base.OnTriggerEnter2D(col);
 
-        if (col.gameObject.CompareTag("PlayerAttack"))
+        if (col.gameObject.CompareTag("PlayerAttack") || col.gameObject.CompareTag("Bullet"))
         {
+            
+            this.gameObject.transform.localScale *= 0.7f;
             GameObject g =Instantiate(this.gameObject);
+            if (g.transform.localScale.x < 0.2f) Destroy(g);
+            g.GetComponent<MeleeEnemy>().health = this.health;
+           
          
         }
 

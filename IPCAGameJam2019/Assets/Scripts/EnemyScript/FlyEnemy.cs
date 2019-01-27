@@ -7,9 +7,13 @@ public class FlyEnemy : Enemy
     private Vector2 originPos;
     public GameObject Bullet;
     private bool atacknow;
-    bool goingRight;
+    public bool goingRight;
     public AudioClip aC_atk, wing1, wing2;
     public GameObject spwanPointOnj;
+
+    //public int starv;
+    public int amplitude;
+    public float period;
 
 
     protected override void Start()
@@ -19,8 +23,11 @@ public class FlyEnemy : Enemy
         knockValue = 0.25f;
         health = 20;
         originPos = this.transform.position;
-        goingRight = true;
+        //goingRight = true;
         StartCoroutine(Changedi());
+
+ 
+
     }
 
     protected override void Update()
@@ -30,7 +37,7 @@ public class FlyEnemy : Enemy
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        velocity += (goingRight ? Vector2.right*4 : Vector2.left*4) * 0.01f;
+        velocity += (goingRight ? Vector2.right*amplitude : Vector2.left*amplitude) * 0.01f;
 
         if (SensePlayer())
         {
@@ -69,7 +76,7 @@ public class FlyEnemy : Enemy
     {
         while (true)
         {
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(period);
             goingRight = !goingRight;
         }
 
