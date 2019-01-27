@@ -404,7 +404,7 @@ PrefabInstance:
     - target: {fileID: 8743193001658540497, guid: d98a306f48ceb3c429e56d5c02b4c958,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8743193001658540502, guid: d98a306f48ceb3c429e56d5c02b4c958,
         type: 3}
@@ -485,6 +485,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044045615156683298, guid: d98a306f48ceb3c429e56d5c02b4c958,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044045615156683298, guid: d98a306f48ceb3c429e56d5c02b4c958,
+        type: 3}
+      propertyPath: MaxDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044045615156683298, guid: d98a306f48ceb3c429e56d5c02b4c958,
+        type: 3}
+      propertyPath: MinDistance
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d98a306f48ceb3c429e56d5c02b4c958, type: 3}
@@ -1086,7 +1101,7 @@ PrefabInstance:
     - target: {fileID: 8743193001658540497, guid: d98a306f48ceb3c429e56d5c02b4c958,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8743193001658540502, guid: d98a306f48ceb3c429e56d5c02b4c958,
         type: 3}
@@ -1157,6 +1172,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044045615156683298, guid: d98a306f48ceb3c429e56d5c02b4c958,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044045615156683298, guid: d98a306f48ceb3c429e56d5c02b4c958,
+        type: 3}
+      propertyPath: MaxDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044045615156683298, guid: d98a306f48ceb3c429e56d5c02b4c958,
+        type: 3}
+      propertyPath: MinDistance
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d98a306f48ceb3c429e56d5c02b4c958, type: 3}
@@ -4230,7 +4260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1063921785, guid: c6e63c22dec496f4883efc0f7b92a3c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.2
+      value: -102.3
       objectReference: {fileID: 0}
     - target: {fileID: 1063921785, guid: c6e63c22dec496f4883efc0f7b92a3c1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7353,7 +7383,7 @@ PrefabInstance:
     - target: {fileID: 8743193001658540497, guid: d98a306f48ceb3c429e56d5c02b4c958,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8743193001658540502, guid: d98a306f48ceb3c429e56d5c02b4c958,
         type: 3}
@@ -7434,6 +7464,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044045615156683298, guid: d98a306f48ceb3c429e56d5c02b4c958,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044045615156683298, guid: d98a306f48ceb3c429e56d5c02b4c958,
+        type: 3}
+      propertyPath: MaxDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044045615156683298, guid: d98a306f48ceb3c429e56d5c02b4c958,
+        type: 3}
+      propertyPath: MinDistance
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d98a306f48ceb3c429e56d5c02b4c958, type: 3}

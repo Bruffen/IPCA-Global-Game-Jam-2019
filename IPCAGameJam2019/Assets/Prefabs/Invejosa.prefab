@@ -201,8 +201,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 2.424408
-  MaxDistance: 10
+  MinDistance: 2
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -237,7 +237,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -300,3 +300,4 @@ MonoBehaviour:
   wing2: {fileID: 8300000, guid: ff271b603a03c37438413bd167c6e71c, type: 3}
   spwanPointOnj: {fileID: 834228932531479045}
   amplitude: 4
+  period: 0
