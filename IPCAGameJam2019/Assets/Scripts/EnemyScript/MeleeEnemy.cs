@@ -35,6 +35,10 @@ public class MeleeEnemy : Enemy
             this.gameObject.transform.localScale *= 0.7f;
             GameObject g =Instantiate(this.gameObject);
             if (g.transform.localScale.x < 0.2f) Destroy(g);
+            g.GetComponent<MeleeEnemy>().aS.pitch = this.aS.pitch;
+            g.GetComponent<MeleeEnemy>().aS.volume = this.aS.volume;
+            g.GetComponent<MeleeEnemy>().aS.volume += 0.3f;
+            g.GetComponent<MeleeEnemy>().aS.pitch += 1f;
             g.GetComponent<MeleeEnemy>().health = this.health;
            
          

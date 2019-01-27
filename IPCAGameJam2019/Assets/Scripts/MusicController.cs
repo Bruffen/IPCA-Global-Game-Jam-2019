@@ -6,8 +6,8 @@ public class MusicController : MonoBehaviour
 {
     public Transform[] waypoints;
 
-    AudioSource[] audioSources;
-    int currentAudioSource;
+    public AudioSource[] audioSources;
+    public int currentAudioSource;
     int oldAudioSource;
     int fadingOutSource;
     Transform player;
