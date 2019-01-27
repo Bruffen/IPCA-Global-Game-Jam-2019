@@ -8,7 +8,7 @@ public class FlyEnemy : Enemy
     public GameObject Bullet;
     private bool atacknow;
     bool goingRight;
-    public AudioClip aC_atk;
+    public AudioClip aC_atk, wing1, wing2;
     public GameObject spwanPointOnj;
 
 
@@ -73,5 +73,13 @@ public class FlyEnemy : Enemy
             goingRight = !goingRight;
         }
 
+    }
+
+    protected void PlayWingsoundBaixo() {
+        aS.PlayOneShot(wing1);
+    }
+    protected void PlayWingsoundCima()
+    {
+        aS.PlayOneShot(wing2);
     }
 }
