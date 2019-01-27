@@ -9,18 +9,35 @@ public class MusicController : MonoBehaviour
     AudioSource[] audioSources;
     int currentAudioSource;
     int oldAudioSource;
+    int fadingOutSource;
     Transform player;
 
-    float startTime;
     float timer;
-
-    float initialTime;
+    bool fading;
 
     void Start()
     {
         audioSources = GetComponents<AudioSource>();
-        currentAudioSource = 0;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        if (player.position.x < waypoints[waypoints.Length - 1].position.x)
+        {
+            currentAudioSource = waypoints.Length - 1;
+        }
+        else
+        {
+            for (int i = 0; i < waypoints.Length - 1; i++)
+            {
+                if (player.position.x <= waypoints[i].position.x && player.position.x > waypoints[i + 1].position.x)
+                {
+                    currentAudioSource = i;
+                    break;
+                }
+            }
+        }
+
+        audioSources[currentAudioSource].Play();
+        audioSources[currentAudioSource].volume = 1.0f;
     }
 
     void Update()
@@ -42,34 +59,32 @@ public class MusicController : MonoBehaviour
             }
         }
 
-        if (!audioSources[currentAudioSource].isPlaying)
+        if (currentAudioSource != oldAudioSource)
         {
-            audioSources[currentAudioSource].Play();
-            //CrossFade();
+            if (!audioSources[currentAudioSource].isPlaying)
+            {
+                audioSources[currentAudioSource].Play();
+            }
+            fadingOutSource = oldAudioSource;
+            fading = true;
+            timer = 0.0f;
         }
+
+        if (fading) Fade(audioSources[currentAudioSource], audioSources[fadingOutSource]);
     }
 
-    /*void CrossFade()
-    {
-        Fade(audioSources[currentAudioSource], true);
-        Fade(audioSources[oldAudioSource], false);
-    }
-
-    //IEnumerator Fade(AudioSource audio, bool fadeIn)
     void Fade(AudioSource audioIn, AudioSource audioOut)
     {
-        startTime = Time.time;
-        float startValue = 0.0f;
-        float endValue = 1.0f - startValue;
-        if ()
-        {
-            float elapsed = Time.time - startTime;
-            audio.volume = Mathf.Lerp(startValue, endValue, elapsed);
+        timer += Time.deltaTime;
 
-            if (audio.volume == endValue)
-            {
-                if (!fadeIn) audio.Stop();
-            }
+        audioIn.volume = Mathf.Lerp(0.0f, 1.0f, timer);
+        audioOut.volume = Mathf.Lerp(1.0f, 0.0f, timer);
+
+        if (timer > 1.0f)
+        {
+            audioOut.Stop();
+            audioIn.volume = 1.0f;
+            fading = false;
         }
-    }*/
+    }
 }
