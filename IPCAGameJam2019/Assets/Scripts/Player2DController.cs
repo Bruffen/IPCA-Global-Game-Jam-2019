@@ -35,7 +35,8 @@ public class Player2DController : MonoBehaviour
     public GameObject Bullet;
 
     public AudioSource As;
-    public AudioClip tacaoDir, tacaoEsq, swordSound,shoeTrowSound;
+    public AudioClip tacaoDir, tacaoEsq, swordSound,shoeTrowSound, ladingSound;
+    public AudioClip dano1, dano2, dano3;
 
     void Start()
     {
@@ -112,7 +113,21 @@ public class Player2DController : MonoBehaviour
 
     void TakeDamage(int damage)
     {
-        health -= damage;
+        switch (Random.Range(1, 4))
+        {
+            case 1:
+                As.PlayOneShot(dano1);
+                break;
+            case 2:
+                As.PlayOneShot(dano2);
+                break;
+            case 3:
+                As.PlayOneShot(dano3);
+                break;
+        }
+
+
+                health -= damage;
     }
 
     void HandleAttacks()
@@ -204,6 +219,7 @@ public class Player2DController : MonoBehaviour
     {
         if (col.gameObject.layer == 9)
         {
+            if (!grounded) As.PlayOneShot(ladingSound);
             grounded = true;
             secondJump = true;
             velocity.y = 0;
@@ -211,11 +227,17 @@ public class Player2DController : MonoBehaviour
         if (col.gameObject.CompareTag("Enemy"))
         {
             knockbackVelocity += Knockback(col.gameObject.transform);
+            TakeDamage(5);
         }
-        /*else if (col.gameObject.CompareTag("Enemy"))
+        if (col.gameObject.CompareTag("BulletEnemy"))
         {
-            TakeDamage(1); //TODO calculate damage
-        }*/
+            TakeDamage(1);
+            Destroy(col.gameObject);
+        }
+        //else if (col.gameObject.CompareTag("Enemy"))
+        //{
+        //  TakeDamage(1); //TODO calculate damage
+        //}
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -224,7 +246,7 @@ public class Player2DController : MonoBehaviour
         {
             knockbackVelocity += Knockback(col.gameObject.transform);
         }
-     
+      
     }
 
 
