@@ -13,18 +13,16 @@ public class gestorInicioLevel : MonoBehaviour
     // Start is called before the first frame update
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        if (collision.gameObject.CompareTag("Player")) { 
+        if (collision.gameObject.CompareTag("Player"))
+        {
             if (!jaToquei) aS.PlayOneShot(clip);
-            m = GameObject.Find("MusicControlller").GetComponent<MusicController>();
+            m = GameObject.Find("MusicController").GetComponent<MusicController>();
             m.audioSources[m.currentAudioSource].volume = 0.5f;
             jaToquei = true;
             Destroy(g);
         }
-       
-
-        
     }
+
     private void Update()
     {
         if (jaToquei)

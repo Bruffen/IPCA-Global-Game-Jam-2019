@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.PostProcessing;
 
 public class Player2DController : MonoBehaviour
@@ -46,6 +47,8 @@ public class Player2DController : MonoBehaviour
     public AudioClip tacaoDir, tacaoEsq, swordSound, shoeTrowSound, ladingSound;
     public AudioClip dano1, dano2, dano3;
 
+    public List<GameObject> canvasHealth;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -55,7 +58,7 @@ public class Player2DController : MonoBehaviour
         colorGrading.saturation.value = -50.0f;
         minSaturation = colorGrading.saturation.value;
 
-        health = 10;
+        health = 6;
 
         frontAttackInitalPos = FrontAttack.transform.localPosition;
         frontAttackSr = FrontAttack.GetComponent<SpriteRenderer>();
@@ -142,6 +145,13 @@ public class Player2DController : MonoBehaviour
 
 
         health -= damage;
+
+        UpdateUI();
+
+        if (health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     void HandleAttacks()
@@ -244,7 +254,7 @@ public class Player2DController : MonoBehaviour
             if (col.gameObject.CompareTag("Enemy"))
             {
                 knockbackVelocity += Knockback(col.gameObject.transform);
-                TakeDamage(5);
+                TakeDamage(1);
             }
             if (col.gameObject.CompareTag("BulletEnemy"))
             {
@@ -293,6 +303,18 @@ public class Player2DController : MonoBehaviour
         {
             dessatureTimer = 0.0f;
             dessature = false;
+        }
+    }
+
+    private void UpdateUI()
+    {
+        for (int i = 0; i < canvasHealth.Count; i++)
+        {
+            if (i <= health - 1)
+                canvasHealth[i].SetActive(true);
+            else
+                canvasHealth[i].SetActive(false);
+
         }
     }
 }

@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
         knockVelocity *= 0.9f;
         velocity *= 0.9f;
 
-       // if (IsMoving()) aS.(aC_walk); 
+        // if (IsMoving()) aS.(aC_walk); 
     }
 
     protected virtual Vector2 Knockback()
@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
         {
             Scheme();
         }
-       
+
     }
 
     private void takeDamage(int damage)
@@ -91,14 +91,14 @@ public class Enemy : MonoBehaviour
             case 3:
                 aS.PlayOneShot(aC_Dano3);
                 break;
-            
+
         }
-        
-        
+
+
         health -= damage;
         if (health <= 0)
         {
-            GetComponent<BoxCollider2D>().isTrigger=true;
+            GetComponent<BoxCollider2D>().isTrigger = true;
             StartCoroutine(BulletDestroy());
         }
     }
@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator BulletDestroy()
+    protected virtual IEnumerator BulletDestroy()
     {
         yield return new WaitForSeconds(5.0f);
         Destroy(this.gameObject);
@@ -130,7 +130,8 @@ public class Enemy : MonoBehaviour
 
     }
 
-    protected void facelayer() {
+    protected void facelayer()
+    {
         if (tPlayer.position.x > transform.position.x)
         {
             //face right
@@ -155,7 +156,7 @@ public class Enemy : MonoBehaviour
             oldPos = transform.position.x;
             return false;
         }
-        
+
     }
 
 }

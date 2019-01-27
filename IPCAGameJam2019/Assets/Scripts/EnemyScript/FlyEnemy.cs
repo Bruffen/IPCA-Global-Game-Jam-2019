@@ -26,7 +26,7 @@ public class FlyEnemy : Enemy
         //goingRight = true;
         StartCoroutine(Changedi());
 
- 
+
 
     }
 
@@ -37,7 +37,7 @@ public class FlyEnemy : Enemy
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        velocity += (goingRight ? Vector2.right*amplitude : Vector2.left*amplitude) * 0.01f;
+        velocity += (goingRight ? Vector2.right * amplitude : Vector2.left * amplitude) * 0.01f;
 
         if (SensePlayer())
         {
@@ -62,8 +62,8 @@ public class FlyEnemy : Enemy
         Vector2 velocity = new Vector2(tPlayer.transform.position.x - enRigidBody.position.x, tPlayer.transform.position.y - enRigidBody.position.y);
         velocity.Normalize();
         b.GetComponent<BulletController>().Assign(velocity);
-        c.GetComponent<BulletController>().Assign(velocity-Vector2.one);
-        d.GetComponent<BulletController>().Assign(velocity-Vector2.one*2);
+        c.GetComponent<BulletController>().Assign(velocity - Vector2.one);
+        d.GetComponent<BulletController>().Assign(velocity - Vector2.one * 2);
     }
     protected override Vector2 Knockback()
     {
@@ -82,7 +82,14 @@ public class FlyEnemy : Enemy
 
     }
 
-    protected void PlayWingsoundBaixo() {
+    protected override IEnumerator BulletDestroy()
+    {
+        Destroy(this.gameObject);
+        yield return null;
+    }
+
+    protected void PlayWingsoundBaixo()
+    {
         aS.PlayOneShot(wing1);
     }
     protected void PlayWingsoundCima()
