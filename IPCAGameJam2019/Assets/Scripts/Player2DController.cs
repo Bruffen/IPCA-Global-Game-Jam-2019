@@ -34,6 +34,9 @@ public class Player2DController : MonoBehaviour
 
     public GameObject Bullet;
 
+    public AudioSource As;
+    public AudioClip tacaoDir, tacaoEsq, swordSound,shoeTrowSound;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -160,6 +163,7 @@ public class Player2DController : MonoBehaviour
     void MeleeAttack()
     {
         float direction = Input.GetAxisRaw("Vertical");
+        As.PlayOneShot(swordSound);
         if (direction == 0.0f)
         {
             FrontAttack.SetActive(true);
@@ -176,6 +180,7 @@ public class Player2DController : MonoBehaviour
 
     void RangedAttack()
     {
+        As.PlayOneShot(shoeTrowSound);
         Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         Vector3 spawnPos = this.transform.position;
         if (direction.y == 1.0f && direction.x == 0.0f)
@@ -205,7 +210,6 @@ public class Player2DController : MonoBehaviour
         }
         if (col.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("does it knokkt?");
             knockbackVelocity += Knockback(col.gameObject.transform);
         }
         /*else if (col.gameObject.CompareTag("Enemy"))
@@ -228,5 +232,14 @@ public class Player2DController : MonoBehaviour
     private Vector2 Knockback(Transform target)
     {
         return (this.transform.position - target.position) * 0.35f;
+    }
+
+    /**Sound section*/
+    private void PlayStepDir() {
+        As.PlayOneShot(tacaoDir);
+    }
+    private void PlayStepEsq()
+    {
+        As.PlayOneShot(tacaoEsq);
     }
 }
