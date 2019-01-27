@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Level1.unity
     guid: 4957a6716d3e86e4fb90b1b216faa00b
+  - enabled: 1
+    path: Assets/Scenes/Levels/TaxiScne.unity
+    guid: 6e1bd53aa8592a84ba11133705554067
   m_configObjects: {}

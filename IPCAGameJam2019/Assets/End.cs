@@ -7,6 +7,7 @@ public class End : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D col)
     {
-        SceneManager.LoadScene(1);
+        if (col.gameObject.CompareTag("Player"))
+            SceneManager.LoadScene(1);
     }
 }

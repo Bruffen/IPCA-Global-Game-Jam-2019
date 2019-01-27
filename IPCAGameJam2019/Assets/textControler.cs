@@ -9,10 +9,13 @@ public class textControler : MonoBehaviour
     public float extra = 5;
     Text text;
     public Canvas canvas;
+    float startTime;
     // Start is called before the first frame update
     void Start()
     {
+        startTime = Time.time;
         text = GetComponent<Text>();
+        extra += startTime;
     }
 
     // Update is called once per frame
@@ -21,12 +24,13 @@ public class textControler : MonoBehaviour
         Debug.Log(Time.time);
 
 
-        if (Time.time > 0.0f+extra && Time.time < 2.0f + extra) {
+        if (Time.time > 0.0f + extra && Time.time < 2.0f + extra)
+        {
             text.text = "Welcome back, <b>Home</b>.\n Global GameJam 2019";
             text.CrossFadeAlpha(0, 4, false);
 
         }
-     
+
 
 
         if (Time.time > 7.0f + extra && Time.time < 11.0f + extra)
@@ -37,7 +41,7 @@ public class textControler : MonoBehaviour
         if (Time.time > 11.0f + extra && Time.time < 13.0f + extra)
         {
             text.CrossFadeAlpha(0, 2, false);
-        
+
         }
 
 
@@ -63,17 +67,19 @@ public class textControler : MonoBehaviour
             text.CrossFadeAlpha(0, 2, false);
 
         }
-        if (Time.time > 23.0f + extra && Time.time<50)
+        if (Time.time > 23.0f + extra && Time.time < 50)
         {
             text.CrossFadeAlpha(1, 2, false);
             text.text = "Original Ideia - Us. \n <b>Thank you for Playing!</b>";
         }
 
-        if (Time.time > 50) {
+        if (Time.time > 50)
+        {
             GameObject.Find("Panel").GetComponent<Image>().color = Color.black;
             text.text = "Press Enter To Play agin";
-            if (Input.GetKeyDown(KeyCode.KeypadEnter)) {
-                SceneManager.LoadScene(0); 
+            if (Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                SceneManager.LoadScene(0);
             }
         }
 

@@ -17,7 +17,7 @@ public class gestorInicioLevel : MonoBehaviour
         {
             if (!jaToquei) aS.PlayOneShot(clip);
             m = GameObject.Find("MusicController").GetComponent<MusicController>();
-            m.audioSources[m.currentAudioSource].volume = 0.5f;
+            m.audioSources[m.currentAudioSource].volume = 0.2f;
             jaToquei = true;
             Destroy(g);
         }
