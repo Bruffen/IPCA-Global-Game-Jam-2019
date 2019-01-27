@@ -1,11 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class Player2DController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
+    public PostProcessProfile ppp;
+    private ColorGrading colorGrading;
+    private float dessatureTimer;
+    private float maxSaturation = 25.0f;
+    private float minSaturation;
+    private bool dessature = false;
 
     private int health;
 
@@ -42,6 +49,10 @@ public class Player2DController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        ppp.TryGetSettings(out colorGrading);
+        dessatureTimer = 0.0f;
+        colorGrading.saturation.value = -50.0f;
+        minSaturation = colorGrading.saturation.value;
 
         health = 10;
 
@@ -64,6 +75,7 @@ public class Player2DController : MonoBehaviour
         Movement();
         HandleAttacks();
         SetAnimatorParams();
+        if (dessature) Dessature();
     }
 
     void FixedUpdate()
@@ -242,14 +254,15 @@ public class Player2DController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Enemy") && DownAttack.activeSelf)
+        if (col.gameObject.CompareTag("Enemy"))
         {
-            knockbackVelocity += Knockback(col.gameObject.transform);
+            colorGrading.saturation.value = 10.0f;
+            dessature = true;
+            if (DownAttack.activeSelf)
+                knockbackVelocity += Knockback(col.gameObject.transform);
         }
-      
+     
     }
-
-
 
     private Vector2 Knockback(Transform target)
     {
@@ -263,5 +276,16 @@ public class Player2DController : MonoBehaviour
     private void PlayStepEsq()
     {
         As.PlayOneShot(tacaoEsq);
+    }
+
+    private void Dessature()
+    {
+        dessatureTimer += Time.deltaTime;
+        colorGrading.saturation.value = (1 - dessatureTimer) * maxSaturation + dessatureTimer * minSaturation;
+        if (dessatureTimer >= 1.0f)
+        {
+            dessatureTimer = 0.0f;
+            dessature = false;
+        }
     }
 }
