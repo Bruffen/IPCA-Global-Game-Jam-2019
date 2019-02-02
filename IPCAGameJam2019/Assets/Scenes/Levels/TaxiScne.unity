@@ -183,7 +183,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Going far, to get near.
+  m_Text: Cat<b>Walk</b>
 --- !u!222 &24405171
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -205,6 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   extra: 5
+  canvas: {fileID: 1098022055}
 --- !u!1 &259278649
 GameObject:
   m_ObjectHideFlags: 0
